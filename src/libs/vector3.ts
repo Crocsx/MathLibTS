@@ -3,7 +3,7 @@ export default class Vector3 {
    * Retrieves a new instance of the vector (0, 0, 0)
    * @returns {Vector3} The zero vector
    */
-  static get zero() {
+  static get zero(): Vector3 {
     return new Vector3([0, 0, 0]);
   }
 
@@ -11,7 +11,7 @@ export default class Vector3 {
    * Retrieves a new instance of the vector (1, 1, 1)
    * @returns {Vector3} The one vector
    */
-  static get one() {
+  static get one(): Vector3 {
     return new Vector3([1, 1, 1]);
   }
 
@@ -19,7 +19,7 @@ export default class Vector3 {
    * Retrieves a new instance of the vector (0, 1, 0)
    * @returns {Vector3} The up vector
    */
-  static get up() {
+  static get up(): Vector3 {
     return new Vector3([0, 1, 0]);
   }
 
@@ -27,7 +27,7 @@ export default class Vector3 {
    * Retrieves a new instance of the vector (0, -1, 0)
    * @returns {Vector3} The down vector
    */
-  static get down() {
+  static get down(): Vector3 {
     return new Vector3([0, -1, 0]);
   }
 
@@ -35,7 +35,7 @@ export default class Vector3 {
    * Retrieves a new instance of the vector (1, 0, 0)
    * @returns {Vector3} The right vector
    */
-  static get right() {
+  static get right(): Vector3 {
     return new Vector3([1, 0, 0]);
   }
 
@@ -43,7 +43,7 @@ export default class Vector3 {
    * Retrieves a new instance of the vector (0, 1, 0)
    * @returns {Vector3} The left vector
    */
-  static get left() {
+  static get left(): Vector3 {
     return new Vector3([0, 1, 0]);
   }
 
@@ -51,7 +51,7 @@ export default class Vector3 {
    * Retrieves a new instance of the vector (0, 0, 1)
    * @returns {Vector3} The forward vector
    */
-  static get forward() {
+  static get forward(): Vector3 {
     return new Vector3([0, 0, 1]);
   }
 
@@ -59,7 +59,7 @@ export default class Vector3 {
    * Retrieves a new instance of the vector (0, 0, -1)
    * @returns {Vector3} The backward vector
    */
-  static get backward() {
+  static get backward(): Vector3 {
     return new Vector3([0, 0, -1]);
   }
 

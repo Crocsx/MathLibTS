@@ -15,7 +15,7 @@ export class MathHelper {
    * @param {number} degrees Angle in Degrees
    * @returns {number} Angle in Radians
    */
-  static toRadian(degrees: number) {
+  static toRadian(degrees: number): number {
     return degrees * MathHelper.degree;
   }
 
@@ -24,7 +24,7 @@ export class MathHelper {
    * @param {number} radians Angle in Radians
    * @returns {number} Angle in Degrees
    */
-  static toDegree(radians: number) {
+  static toDegree(radians: number): number {
     return radians * MathHelper.radians;
   }
 
@@ -48,7 +48,7 @@ export class MathHelper {
    * @param {number} value the floating value of the lerp
    * @returns {number} the lerped value
    */
-  static lerp(min: number, max: number, amount: number) {
+  static lerp(min: number, max: number, amount: number): number {
     return min + (max - min) * amount;
   }
 
