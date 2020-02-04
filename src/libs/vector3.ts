@@ -1,4 +1,14 @@
+import { MathHelper } from "./mathHelper";
+
 export default class Vector3 {
+  private _values = new Float32Array(3);
+
+  constructor(values?: number[]) {
+    if (values) {
+      this.xyz = values;
+    }
+  }
+
   /**
    * Retrieves a new instance of the vector (0, 0, 0)
    * @returns {Vector3} The zero vector
@@ -135,12 +145,13 @@ export default class Vector3 {
     this._values[1] = values[1];
     this._values[2] = values[2];
   }
-  private _values = new Float32Array(3);
-  constructor(values?: number[]) {
-    if (values) {
-      this.xyz = values;
-    }
-  }
+
+  /**
+   * @param {Vector3} vector The first vector for the operation
+   * @param {Vector3} vector2 The second vector for the operation
+   * @param {Vector3} [dest] the Vector3 destination of the result
+   * @returns {Vector3} the result of the cross operation
+   */
   static cross(vector: Vector3, vector2: Vector3, dest?: Vector3): Vector3 {
     if (!dest) dest = new Vector3();
 
@@ -158,6 +169,13 @@ export default class Vector3 {
 
     return dest;
   }
+
+  /**
+   * Calculates the dot product of two vectors
+   * @param {Vector3} vector Starting position
+   * @param {Vector3} vector2 Ending position
+   * @returns {number} The dot product of the two vectors
+   */
   static dot(vector: Vector3, vector2: Vector3): number {
     let x = vector.x;
     let y = vector.y;
@@ -169,15 +187,38 @@ export default class Vector3 {
 
     return x * x2 + y * y2 + z * z2;
   }
+
+  /**
+   * Calculates the distance between two vectors
+   * @param {Vector3} vector Starting position
+   * @param {Vector3} vector2 Ending position
+   * @returns {number} The distance between the two vectors
+   */
   static distance(vector: Vector3, vector2: Vector3): number {
     return Math.sqrt(this.squaredDistance(vector, vector2));
   }
+
+  /**
+   * Calculates the distance between two vectors squared
+   * @param {Vector3} vector Starting position
+   * @param {Vector3} vector2 Ending position
+   * @returns {number} The distance between the two vectors squared
+   */
   static squaredDistance(vector: Vector3, vector2: Vector3): number {
     let x = vector2.x - vector.x;
     let y = vector2.y - vector.y;
     let z = vector2.z - vector.z;
     return x * x + y * y + z * z;
   }
+
+  /**
+   * Calculates a normalized vector representing the direction from one vector to another.
+   * If no dest vector is specified, a new vector is instantiated.
+   * @param {Vector3} vector Starting position
+   * @param {Vector3} vector2 Ending position
+   * @param {Vector3} [dest] The object onto which to store the result.
+   * @returns {Vector3} the result of the operation
+   */
   static direction(vector: Vector3, vector2: Vector3, dest?: Vector3): Vector3 {
     if (!dest) dest = new Vector3();
 
@@ -203,6 +244,16 @@ export default class Vector3 {
 
     return dest;
   }
+
+  /**
+   * Performs a linear interpolation over two vectors.
+   * If no dest vector is specified, a new vector is instantiated.
+   * @param {Vector3} a the minimum value of the lerp
+   * @param {Vector3} b the maximum value of the lerp
+   * @param {number} t the floating value of the lerp
+   * @param {Vector3} [dest] The object onto which to store the result.
+   * @returns {Vector3} the result of the operation
+   */
   static lerp(a: Vector3, b: Vector3, t: number, dest?: Vector3): Vector3 {
     if (!dest) dest = new Vector3();
     dest.x = a.x + t * (b.x - a.x);
@@ -210,6 +261,15 @@ export default class Vector3 {
     dest.z = a.z + t * (b.z - a.z);
     return dest;
   }
+
+  /**
+   * Adds two vectors.
+   * If no dest vector is specified, a new vector is instantiated.
+   * @param {Vector3} vector the vector2 augend
+   * @param {Vector3} vector2 the vector2 addend
+   * @param {Vector3} [dest] The object onto which to store the result.
+   * @returns {Vector3} the result of the operation
+   */
   static sum(vector: Vector3, vector2: Vector3, dest?: Vector3): Vector3 {
     if (!dest) dest = new Vector3();
     dest.x = vector.x + vector2.x;
@@ -217,6 +277,15 @@ export default class Vector3 {
     dest.z = vector.z + vector2.z;
     return dest;
   }
+
+  /**
+   * Subtracts two vectors.
+   * If no dest vector is specified, a new vector is instantiated.
+   * @param {Vector3} vector the vector2 minuend
+   * @param {Vector3} vector2 the vector2 subtrahend
+   * @param {Vector3} [dest] The object onto which to store the result.
+   * @returns {Vector3} the result of the operation
+   */
   static difference(
     vector: Vector3,
     vector2: Vector3,
@@ -228,6 +297,15 @@ export default class Vector3 {
     dest.z = vector.z - vector2.z;
     return dest;
   }
+
+  /**
+   * Multiplies two vectors piecewise.
+   * If no dest vector is specified, a new vector is instantiated.
+   * @param {Vector3} vector the vector2 multiplicand
+   * @param {Vector3} vector2 the vector2 multiplier
+   * @param {Vector3} [dest] The object onto which to store the result.
+   * @returns {Vector3} the result of the operation
+   */
   static product(vector: Vector3, vector2: Vector3, dest?: Vector3): Vector3 {
     if (!dest) dest = new Vector3();
     dest.x = vector.x * vector2.x;
@@ -235,6 +313,15 @@ export default class Vector3 {
     dest.z = vector.z * vector2.z;
     return dest;
   }
+
+  /**
+   * Divides two vectors piecewise.
+   * If no dest vector is specified, a new vector is instantiated.
+   * @param {Vector3} vector the vector2 dividend
+   * @param {Vector3} vector2 the vector2 divisor
+   * @param {Vector3} [dest] The object onto which to store the result.
+   * @returns {Vector3} the result of the operation
+   */
   static quotient(vector: Vector3, vector2: Vector3, dest?: Vector3): Vector3 {
     if (!dest) dest = new Vector3();
     dest.x = vector.x / vector2.x;
@@ -242,17 +329,41 @@ export default class Vector3 {
     dest.z = vector.z / vector2.z;
     return dest;
   }
+
+  /**
+   * Retrieves the x-component or y-component of the vector.
+   * @param {number} index index of the component (0, 1 or 2)
+   * @returns {number} the value of the vector component
+   */
   at(index: number): number {
     return this._values[index];
   }
+
+  /**
+   * Sets both the x- y- and z-components of the vector to 0.
+   */
   reset(): void {
     this.xyz = [0, 0, 0];
   }
+
+  /**
+   * Copies the x- y- and z-components from one vector to another.
+   * If no dest vector is specified, a new vector is instantiated.
+   * @param {Vector3} [dest] The object onto which to store the result.
+   * @returns {Vector3} the new instance of the vector
+   */
   copy(dest?: Vector3): Vector3 {
     if (!dest) dest = new Vector3();
     dest.xyz = this.xyz;
     return dest;
   }
+
+  /**
+   * Multiplies both the x- y- and z-components of a vector by -1.
+   * If no dest vector is specified, the operation is performed in-place.
+   * @param {Vector3} [dest] The object onto which to store the result.
+   * @returns {Vector3} the vector negated
+   */
   negate(dest?: Vector3): Vector3 {
     if (!dest) dest = this;
 
@@ -262,7 +373,14 @@ export default class Vector3 {
 
     return dest;
   }
-  equals(other: Vector3, threshold = EPSILON): boolean {
+
+  /**
+   * Checks if two vectors are equal, using a threshold to avoid floating-point precision errors.
+   * @param {Vector3} other the vector to compare the equality
+   * @param {number} [threshold] the treshold for precision.
+   * @returns {boolean} is equal to provided vector
+   */
+  equals(other: Vector3, threshold = MathHelper.EPSILON): boolean {
     if (Math.abs(this.x - other.x) > threshold) {
       return false;
     }
@@ -274,15 +392,33 @@ export default class Vector3 {
     }
     return true;
   }
+
+  /**
+   * Returns the distance from the vector to the origin.
+   * @returns {number} the length of the vector
+   */
   length(): number {
     return Math.sqrt(this.squaredLength());
   }
+
+  /**
+   * Returns the distance from the vector to the origin, squared.
+   * @returns {number} the distance from the origin squared
+   */
   squaredLength(): number {
     let x = this.x;
     let y = this.y;
     let z = this.z;
     return x * x + y * y + z * z;
   }
+
+  /**
+   * Adds two vectors together.
+   * If no dest vector is specified, the operation is performed in-place.
+   * @param {Vector3} vector The Vector2 to add with.
+   * @param {Vector3} [dest] The object onto which to store the result.
+   * @returns {Vector3} The modified result parameter.
+   */
   add(vector: Vector3, dest?: Vector3): Vector3 {
     if (!dest) dest = this;
     dest.x = this.x + vector.x;
@@ -290,6 +426,14 @@ export default class Vector3 {
     dest.z = this.z + vector.z;
     return dest;
   }
+
+  /**
+   * Subtracts one vector from another.
+   * If no dest vector is specified, the operation is performed in-place.
+   * @param {Vector3} vector The Vector2 to substract with.
+   * @param {Vector3} [dest] The object onto which to store the result.
+   * @returns {Vector3} The modified result parameter.
+   */
   subtract(vector: Vector3, dest?: Vector3): Vector3 {
     if (!dest) dest = this;
     dest.x = this.x - vector.x;
@@ -297,6 +441,14 @@ export default class Vector3 {
     dest.z = this.z - vector.z;
     return dest;
   }
+
+  /**
+   * Multiplies two vectors together piecewise.
+   * If no dest vector is specified, the operation is performed in-place.
+   * @param {Vector3} vector The Vector2 to multiply with.
+   * @param {Vector3} [dest] The object onto which to store the result.
+   * @returns {Vector3} The modified result parameter.
+   */
   multiply(vector: Vector3, dest?: Vector3): Vector3 {
     if (!dest) dest = this;
     dest.x = this.x * vector.x;
@@ -304,6 +456,13 @@ export default class Vector3 {
     dest.z = this.z * vector.z;
     return dest;
   }
+
+  /**
+   * Divides two vectors piecewise.
+   * @param {Vector3} vector The Vector2 to divide with.
+   * @param {Vector3} [dest] The object onto which to store the result.
+   * @returns {Vector3} The modified result parameter.
+   */
   divide(vector: Vector3, dest?: Vector3): Vector3 {
     if (!dest) dest = this;
     dest.x = this.x / vector.x;
@@ -311,6 +470,14 @@ export default class Vector3 {
     dest.z = this.z / vector.z;
     return dest;
   }
+
+  /**
+   * Scales a vector by a scalar parameter.
+   * If no dest vector is specified, the operation is performed in-place.
+   * @param {number} value The scalar to multiply with.
+   * @param {Vector3} [dest] The object onto which to store the result.
+   * @returns {Vector3} The modified result parameter.
+   */
   scale(value: number, dest?: Vector3): Vector3 {
     if (!dest) dest = this;
     dest.x = this.x * value;
@@ -318,6 +485,13 @@ export default class Vector3 {
     dest.z = this.z * value;
     return dest;
   }
+
+  /**
+   * Normalizes a vector.
+   * If no dest vector is specified, the operation is performed in-place.
+   * @param {Vector3} [dest] The object onto which to store the result.
+   * @returns {Vector3} The modified result parameter.
+   */
   normalize(dest?: Vector3): Vector3 {
     if (!dest) dest = this;
     dest.xyz = this.xyz;
@@ -335,7 +509,4 @@ export default class Vector3 {
     dest.z *= length;
     return dest;
   }
-  // TODO: multiply by Matrix3
-  // TODO: multiply by Quaternion
-  // TODO: convert to Quaternion
 }
