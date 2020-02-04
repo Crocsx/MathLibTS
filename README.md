@@ -1,2 +1,0 @@
-# MathLibTS
-Created with CodeSandbox
