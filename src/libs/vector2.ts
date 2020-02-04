@@ -4,11 +4,16 @@ import { Vector3 } from "./common";
 export default class Vector2 {
   private _values = new Float32Array(2);
 
-  constructor(values?: number[]) {
-    if (values) {
-      this.xy = values;
+  /**
+   * Constructor of Vector 2, can be called with
+   * @param {number[] | number} [p1] array of number, or number for x value
+   * @param {number} [p2] number for y value
+   */
+  constructor(p1?: number[] | number, p2?: number) {
+    if (Array.isArray(p1) && p1.length > 2) {
+      this.xy = p1;
     } else {
-      this.xy = [0, 0];
+      this.xy = [Number(p1) || 0, Number(p2) || 0];
     }
   }
 

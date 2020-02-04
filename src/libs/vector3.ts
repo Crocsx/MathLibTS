@@ -3,11 +3,19 @@ import { MathHelper } from "./mathHelper";
 export default class Vector3 {
   private _values = new Float32Array(3);
 
-  constructor(values?: number[]) {
-    if (values) {
-      this.xyz = values;
+  /**
+   * Constructor of Vector 3, can be called with
+   * @param {number[] | number} [p1] array of number, or number for x value
+   * @param {number} [p2] number for y value
+   */
+  constructor(p1?: number[] | number, p2?: number, p3?: number) {
+    if (Array.isArray(p1) && p1.length > 3) {
+      this.xyz = p1;
+    } else {
+      this.xyz = [Number(p1) || 0, Number(p2) || 0, Number(p3) || 0];
     }
   }
+
 
   /**
    * Retrieves a new instance of the vector (0, 0, 0)
